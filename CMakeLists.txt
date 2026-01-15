@@ -6,6 +6,10 @@ include(pico-sdk/pico_sdk_init.cmake)
 
 project(pico_uart_bridge)
 
+if (NOT PICO_BOARD)
+	set(PICO_BOARD pico CACHE STRING "Target board")
+endif()
+
 pico_sdk_init()
 
 add_executable(uart_bridge uart-bridge.c usb-descriptors.c)

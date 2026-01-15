@@ -1,12 +1,21 @@
-name: CI
+name: pico-uart-bridge
 
 on:
   - push
   - pull_request
 
 jobs:
-  CI:
+  build:
+    name: Build ${{ matrix.name }}
     runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: pico
+            name: Raspberry Pi Pico
+          - board: pico2
+            name: Raspberry Pi Pico 2
     steps:
       - name: 'Check out code'
         uses: actions/checkout@v4
@@ -23,7 +32,7 @@ jobs:
       - name: 'Configure'
         run: |
           mkdir -p build
-          cmake -B build
+          cmake -B build -DPICO_BOARD=${{ matrix.board }}
 
       - name: 'Build'
         run: |
@@ -32,6 +41,6 @@ jobs:
       - name: 'Upload binary'
         uses: actions/upload-artifact@v4
         with:
-          name: pico-uart-bridge.uf2
+          name: ${{ matrix.board }}-uart-bridge.uf2
           path: build/uart_bridge.uf2
           retention-days: 5
