@@ -58,8 +58,8 @@ const uart_id_t UART_ID[CFG_TUD_CDC] = {
 		.inst = uart1,
 		.irq = UART1_IRQ,
 		.irq_fn = &uart1_irq_fn,
-		.tx_pin = 4,
-		.rx_pin = 5,
+		.tx_pin = 8,
+		.rx_pin = 9,
 	}
 };
 
